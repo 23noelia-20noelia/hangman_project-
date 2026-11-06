@@ -21,3 +21,14 @@ class HangmanGame:
                 progress.append("_")
 
         print(" ".join(progress))
+
+    def is_won(self):
+        """Comprueba si todas las letras fueron adivinadas."""
+        return all(
+            not letter.isalpha() or letter.lower() in self.guessed_letters
+            for letter in self.word
+        )
+
+    def is_lost(self):
+        """Comprueba si se alcanzó el máximo de errores."""
+        return self.errors >= self.max_errors
