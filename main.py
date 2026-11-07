@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """Punto de entrada del juego Hangman."""
 
@@ -27,7 +26,15 @@ def main():
     word = get_random_word()
     game = HangmanGame(word)
 
-    letter = get_valid_letter(game.guessed_letters)
+    while not game.is_won() and not game.is_lost():
+        letter = get_valid_letter(game.guessed_letters)
+        game.process_guess(letter)
+        game.display_progress()
+
+    if game.is_won():
+        print("¡Ganaste!")
+    elif game.is_lost():
+        print("Fin del juego")
 
 
 if __name__ == "__main__":
