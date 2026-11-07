@@ -21,6 +21,10 @@ class HangmanGame:
             else:
                 progress.append("_")
 
+        print("Letras adivinadas:", ", ".join(self.guessed_letters))
+        print("Progreso:", " ".join(progress))
+        print("Intentos restantes:", self.max_errors - self.errors)
+
         print(" ".join(progress))
 
     def process_guess(self, letter):
