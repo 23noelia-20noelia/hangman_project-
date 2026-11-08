@@ -2,6 +2,7 @@
 """Punto de entrada del juego Hangman."""
 
 from utils import get_random_word
+from game import HangmanGame, normalize_letter
 
 
 def get_valid_letter(guessed_letters):
@@ -13,7 +14,10 @@ def get_valid_letter(guessed_letters):
             print("Error: debes ingresar una sola letra.")
         elif not letter.isalpha():
             print("Error: solo se permiten letras.")
-        elif letter in guessed_letters:
+        elif any(
+            normalize_letter(guess) == normalize_letter(letter)
+            for guess in guessed_letters
+        ):
             print("Error: ya has intentado esa letra.")
         else:
             return letter
@@ -21,8 +25,6 @@ def get_valid_letter(guessed_letters):
 
 def main():
     """Inicia el juego y solicita una letra válida."""
-    from game import HangmanGame
-
     word = get_random_word()
     game = HangmanGame(word)
 
@@ -35,6 +37,7 @@ def main():
         print("¡Ganaste!")
     elif game.is_lost():
         print("Fin del juego")
+        print("La palabra era:", game.word)
 
 
 if __name__ == "__main__":

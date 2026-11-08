@@ -1,3 +1,8 @@
+def normalize_letter(letter):
+    """Normaliza las vocales para ignorar las tildes."""
+    return letter.lower().translate(str.maketrans("áéíóú", "aeiou"))
+
+
 class HangmanGame:
     """Representa el juego del ahorcado."""
 
@@ -11,11 +16,17 @@ class HangmanGame:
     def display_progress(self):
         """Muestra el progreso actual de la palabra."""
         progress = []
+        normalized_guesses = [
+            normalize_letter(letter)
+            for letter in self.guessed_letters
+        ]
 
         for letter in self.word:
+            normalized = normalize_letter(letter)
+
             if not letter.isalpha():
                 progress.append(letter)
-            elif letter.lower() in self.guessed_letters:
+            elif normalized in normalized_guesses:
                 progress.append(letter)
             else:
                 progress.append("_")
@@ -26,8 +37,14 @@ class HangmanGame:
 
     def is_won(self):
         """Comprueba si todas las letras fueron adivinadas."""
+        normalized_guesses = [
+            normalize_letter(letter)
+            for letter in self.guessed_letters
+        ]
+
         return all(
-            not letter.isalpha() or letter.lower() in self.guessed_letters
+            not letter.isalpha()
+            or normalize_letter(letter) in normalized_guesses
             for letter in self.word
         )
 
@@ -38,7 +55,12 @@ class HangmanGame:
     def process_guess(self, letter):
         """Registra la letra intentada y devuelve si fue acertada."""
         self.guessed_letters.append(letter)
-        if letter in self.word.lower():
+
+        normalized_guess = normalize_letter(letter)
+        normalized_word = normalize_letter(self.word)
+
+        if normalized_guess in normalized_word:
             return True
+
         self.errors += 1
         return False
