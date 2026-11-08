@@ -14,7 +14,7 @@ def get_valid_letter(guessed_letters):
         elif not letter.isalpha():
             print("Error: solo se permiten letras.")
         elif letter in guessed_letters:
-            print("Error: ya has adivinado esa letra.")
+            print("Error: ya has intentado esa letra.")
         else:
             return letter
 

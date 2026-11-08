@@ -20,7 +20,7 @@ class HangmanGame:
             else:
                 progress.append("_")
 
-        print("Letras adivinadas:", ", ".join(self.guessed_letters))
+        print("Letras intentadas:", ", ".join(self.guessed_letters))
         print("Progreso:", " ".join(progress))
         print("Intentos restantes:", self.max_errors - self.errors)
 
@@ -36,10 +36,9 @@ class HangmanGame:
         return self.errors >= self.max_errors
 
     def process_guess(self, letter):
-        """Registra el acierto o suma un error y
-        devuelve si la letra fue acertada."""
+        """Registra la letra intentada y devuelve si fue acertada."""
+        self.guessed_letters.append(letter)
         if letter in self.word.lower():
-            self.guessed_letters.append(letter)
             return True
         self.errors += 1
         return False
