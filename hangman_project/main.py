@@ -27,8 +27,8 @@ def main():
     """Inicia el juego y solicita una letra válida."""
     word = get_random_word()
     game = HangmanGame(word)
-    
-print("Pista: la palabra a adivinar es una película.")
+
+    print("Pista: la palabra a adivinar es una película.")
 
     while not game.is_won() and not game.is_lost():
         letter = get_valid_letter(game.guessed_letters)
